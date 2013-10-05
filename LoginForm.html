@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="apple.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  </head>
+  <body>
+    <div class="box">
+      <div class="form" method="post" id="myform" action="api.yoursite.com/login">
+        <h1 class="title">User Login</h1>
+        <input id="appleId" type="text" name="Apple Id" placeholder="Apple ID"><br>
+        <input id= "password" type="password" name="Password" placeholder="Password">
+        <input id="submit" type="submit" class="login" value="Login to your account">
+      </div>
+    </div>
+  </body>
+  <script>
+    $(function(){
+      $('#submit').on('click', function(){
+        var valid = true
+            errorMessage = '';
+        if($('#appleId').val() === ''){
+          errorMessage += "Please enter an Apple ID ";
+          valid = false;
+        }
+        if($('#password').val() === ''){
+          errorMessage += 'Please enter your password ';
+          valid = false;
+        }
+        if(!valid){
+          alert(errorMessage);
+        }
+        if(valid){
+          $.ajax({
+            url: 'api.yoursite.com/login',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              username : $('#appleId').val(),
+              password : $('#password').val()
+            }),
+            success: function(){
+              console.log('Login Success')
+            },
+            error: function(){
+              console.log('Failed');
+            }
+          })
+        }
+      });
+    });
+
+  </script>
+</html>
