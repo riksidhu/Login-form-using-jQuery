@@ -1,59 +1,53 @@
-<!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Login-form-using-jquery : An example of a simple login form made using jQuery, HTML, CSS and JS." />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Login-form-using-jquery</title>
+    <link rel="stylesheet" href="apple.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
   </head>
-
   <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/riksidhu/Login-form-using-jQuery">View on GitHub</a>
-
-          <h1 id="project_title">Login-form-using-jquery</h1>
-          <h2 id="project_tagline">An example of a simple login form made using jQuery, HTML, CSS and JS.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/riksidhu/Login-form-using-jQuery/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/riksidhu/Login-form-using-jQuery/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+    <div class="box">
+      <div class="form" method="post" id="myform" action="api.yoursite.com/login">
+        <h1 class="title">User Login</h1>
+        <input id="appleId" type="text" name="Apple Id" placeholder="Apple ID"><br>
+        <input id= "password" type="password" name="Password" placeholder="Password">
+        <input id="submit" type="submit" class="login" value="Login to your account">
+      </div>
     </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <p>
-  </p>
-    <div>
-      <div method="post" action="api.yoursite.com/login">
-        <h1>
-<a name="user-login" class="anchor" href="#user-login"><span class="octicon octicon-link"></span></a>User Login</h1>
-        <br>
-</div>
-    </div>
-  
-  
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Login-form-using-jquery maintained by <a href="https://github.com/riksidhu">riksidhu</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
   </body>
+  <script>
+    $(function(){
+      $('#submit').on('click', function(){
+        var valid = true
+            errorMessage = '';
+        if($('#appleId').val() === ''){
+          errorMessage += "Please enter an Apple ID ";
+          valid = false;
+        }
+        if($('#password').val() === ''){
+          errorMessage += 'Please enter your password ';
+          valid = false;
+        }
+        if(!valid){
+          alert(errorMessage);
+        }
+        if(valid){
+          $.ajax({
+            url: 'api.yoursite.com/login',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              username : $('#appleId').val(),
+              password : $('#password').val()
+            }),
+            success: function(){
+              console.log('Login Success')
+            },
+            error: function(){
+              console.log('Failed');
+            }
+          })
+        }
+      });
+    });
+
+  </script>
 </html>
